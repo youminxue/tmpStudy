@@ -38,6 +38,7 @@ type WorkerNet struct {
 	dealer       *zmq.Socket
 	poller       *zmq.Poller
 	routeAddr    string
+	initComplete bool
 }
 
 var (
@@ -377,6 +378,7 @@ func (w *WorkerNet) init(routerAddr string, dealerIdentity string) {
 		_logger.Error("w.dealer creat error: %v", err)
 	}
 	w.dealer.SetSndhwm(w.sndhwmValue)
+	w.dealer.SetRecvhwm(w.recvhwmValue)
 	w.dealer.SetLinger(0)
 	w.dealer.SetIdentity(dealerIdentity)
 	
@@ -394,16 +396,19 @@ func (w *WorkerNet) init(routerAddr string, dealerIdentity string) {
 	lastKeepAliveTimestamp = time.Now()
 	preClock = time.Now() //common_api.getClocks()
 	curClock = preClock
+	w.initComplete = true
 }
 
 func (w *WorkerNet) PreDisable() {
 	w.dealer.Close()
 	w.context.Term()
 	w.context = nil
+	w.initComplete = false
 }
 
 func (w *WorkerNet) BackgroundTask() bool {
-
+	if(!w.initComplete)
+		return false
 	sockets, _ := w.poller.Poll(500 * time.Millisecond)
 	for _, socket := range sockets {
 		switch s := socket.Socket; s {
