@@ -1,0 +1,24 @@
+luajit worker 使用的库和函数:    go 调用的库
+math  						math
+  floor						math.Floor
+cjson                            simplejson
+  encode
+  decode 
+
+common_api
+   serialize
+   splitColon                   split 分隔字符
+   getClocks
+   CreateFileLogger             log4go 
+
+worker_config                   config_json 文件 
+
+
+vitata_status                   vitata_status
+
+worker_net                      worker_net
+
+vitata_status_constant          config_json or txt 
+
+
+

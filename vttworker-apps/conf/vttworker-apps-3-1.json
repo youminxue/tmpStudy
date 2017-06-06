@@ -1,0 +1,12 @@
+{
+    "redisServerAddress": "127.0.0.1",
+    "redisServerPort": "6383",
+    "proxyRouterAddr": "ipc:///tmp/proxy-appsd-3.ipc",
+    "logFilePath" : "/var/duobei/logs/vttworker-apps",
+    "sndhwmValue" : 1000000,
+    "rcvhwmValue" : 1000000,
+    "intervalTime" : 60000,
+    "workerCode": "03-001",
+    "loglevel": "INFO"
+}
+
